@@ -26,7 +26,7 @@ public class ErrorHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorPayload handleBadRequest(BadRequestException ex) {
-        return new ErrorPayload(ex.getMessage(), LocalDateTime.now());
+        return new ErrorPayload(ex.getMessages(), LocalDateTime.now());
     }
 
     @ExceptionHandler({HandlerMethodValidationException.class, NumberFormatException.class, MethodArgumentTypeMismatchException.class, IllegalStateException.class})
