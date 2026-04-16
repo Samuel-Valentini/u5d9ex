@@ -15,7 +15,7 @@ public class ErrorPayload {
     }
 
     public ErrorPayload(List<String> messages, LocalDateTime timeStamp) {
-        this.message = String.join("\n", messages);
+        this.message = String.join(". ", messages);
         this.messages = messages;
         this.timeStamp = timeStamp;
     }
