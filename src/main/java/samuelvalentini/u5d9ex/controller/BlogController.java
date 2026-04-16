@@ -2,6 +2,7 @@ package samuelvalentini.u5d9ex.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import samuelvalentini.u5d9ex.dto.BlogPayload;
 import samuelvalentini.u5d9ex.dto.UpdateBlogPayload;
 import samuelvalentini.u5d9ex.entity.Blog;
@@ -47,4 +48,18 @@ public class BlogController {
     public void deleteBlog(@PathVariable long blogId) {
         this.blogService.deleteBlog(blogId);
     }
+
+    @PutMapping("/{blogId}/cover")
+    public Blog updateBlogCover(@PathVariable Long blogId, @RequestParam("blog_cover") MultipartFile file) {
+        return this.blogService.updateBlogCover(blogId, file);
+    }
+
+    @GetMapping("/{blogId}/cover")
+    public String urlBlogCover(@PathVariable Long blogId) {
+        return this.blogService.findById(blogId).getCover();
+    }
+
 }
+
+
+

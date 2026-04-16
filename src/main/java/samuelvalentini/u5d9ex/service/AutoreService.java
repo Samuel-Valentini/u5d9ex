@@ -2,7 +2,6 @@ package samuelvalentini.u5d9ex.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -66,7 +65,7 @@ public class AutoreService {
         return autoreRepository.save(found);
     }
 
-    public Autore avatarUpload(@NotNull Long autoreId, MultipartFile file) {
+    public Autore avatarUpload(Long autoreId, MultipartFile file) {
         if (autoreId == null) throw new BadRequestException("Id non inserito");
         if (file.isEmpty()) throw new BadRequestException("File non inserito correttamente");
         if (file.getSize() > 5_242_880)
