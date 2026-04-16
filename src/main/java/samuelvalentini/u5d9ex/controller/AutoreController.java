@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import samuelvalentini.u5d9ex.dto.AutorePayload;
 import samuelvalentini.u5d9ex.dto.UpdateAutorePayload;
 import samuelvalentini.u5d9ex.entity.Autore;
@@ -60,4 +61,13 @@ public class AutoreController {
         autoreService.deleteAutore(autoreId);
     }
 
+    @GetMapping("/{autoreId}/avatar")
+    public String avatarFindById(@PathVariable long autoreId) {
+        return this.findById(autoreId).getAvatar();
+    }
+
+    @PutMapping("/{autoreId}/avatar")
+    public Autore updateAvatarById(@PathVariable Long autoreId, @RequestParam("avatar_picture") MultipartFile file) {
+        return this.autoreService.avatarUpload(autoreId, file);
+    }
 }
