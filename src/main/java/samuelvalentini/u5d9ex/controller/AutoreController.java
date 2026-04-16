@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import samuelvalentini.u5d9ex.dto.AutorePayload;
 import samuelvalentini.u5d9ex.dto.UpdateAutorePayload;
 import samuelvalentini.u5d9ex.entity.Autore;
+import samuelvalentini.u5d9ex.exception.BadRequestException;
 import samuelvalentini.u5d9ex.service.AutoreService;
 
 @RestController
@@ -19,9 +20,14 @@ public class AutoreController {
     }
 
     @GetMapping
-    public Page<Autore> findAll(@RequestParam(defaultValue = "0") int start) {
-
-        return autoreService.findAll(start);
+    public Page<Autore> findAll(@RequestParam(defaultValue = "0") String start) {
+        int startNumber;
+        try {
+            startNumber = Integer.parseInt(start);
+        } catch (NumberFormatException e) {
+            throw new BadRequestException("Non è stato inserito un numero intero maggiore o uguale a 0.");
+        }
+        return autoreService.findAll(startNumber);
     }
 
     @GetMapping("/{autoreId}")

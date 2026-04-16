@@ -1,5 +1,6 @@
 package samuelvalentini.u5d9ex.service;
 
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ public class AutoreService {
         this.autoreRepository = autoreRepository;
     }
 
-    public Page<Autore> findAll(int start) {
+    public Page<Autore> findAll(@PositiveOrZero int start) {
         Pageable pageable = PageRequest.of(start, 3, Sort.by("cognome").ascending().and(Sort.by("nome").ascending()));
         return autoreRepository.findAll(pageable);
     }
