@@ -11,7 +11,7 @@ public class BadRequestException extends RuntimeException {
     }
 
     public BadRequestException(List<String> messageList) {
-        super(String.join("\n", messageList));
+        super(String.join(". ", messageList));
         this.messages = messageList;
     }
 

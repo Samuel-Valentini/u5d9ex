@@ -2,12 +2,16 @@ package samuelvalentini.u5d9ex.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import samuelvalentini.u5d9ex.dto.AutorePayload;
 import samuelvalentini.u5d9ex.dto.UpdateAutorePayload;
 import samuelvalentini.u5d9ex.entity.Autore;
 import samuelvalentini.u5d9ex.exception.BadRequestException;
 import samuelvalentini.u5d9ex.service.AutoreService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/authors")
@@ -35,9 +39,13 @@ public class AutoreController {
         return autoreService.findById(autoreId);
     }
 
-    @PostMapping
+    @PostMapping({"", "/"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Autore createNewAutore(@RequestBody AutorePayload autorePayload) {
+    public Autore createNewAutore(@RequestBody @Validated AutorePayload autorePayload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errors = validationResult.getFieldErrors().stream().map(error -> error.getDefaultMessage()).toList();
+            throw new BadRequestException(errors);
+        }
         return autoreService.saveNewAutore(autorePayload);
     }
 
